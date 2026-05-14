@@ -200,27 +200,36 @@
             btn.classList.add('opacity-80', 'pointer-events-none');
             lucide.createIcons();
 
-            // Configurações do html2pdf
+            // Ativa o modo de layout para PDF (Paisagem, compacto)
+            element.classList.remove('shadow-sm');
+            element.classList.add('pdf-mode');
+
+            // Configurações do html2pdf ajustadas para Paisagem (Landscape) e 1 página
             const opt = {
-                margin:       10, // Margem nas bordas (em mm)
+                margin:       [5, 5, 5, 5], // Margem reduzida [top, left, bottom, right]
                 filename:     'Calendario_UAB_2026_2.pdf',
                 image:        { type: 'jpeg', quality: 1 }, 
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true,
                     letterRendering: true,
-                    windowWidth: 1200 
+                    windowWidth: 1250, // Fixa a largura do canvas para caber o grid de 4 meses perfeitamente
+                    scrollY: 0 // Evita bugs de captura caso a tela esteja rolada
                 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
             };
 
             try {
-                element.classList.remove('shadow-sm');
+                // Pequeno delay para garantir que o navegador renderize as mudanças de classe (pdf-mode)
+                await new Promise(resolve => setTimeout(resolve, 150));
+                
                 await html2pdf().set(opt).from(element).save();
             } catch (error) {
                 console.error("Erro ao gerar PDF: ", error);
                 alert("Houve um problema ao exportar o arquivo. Tente novamente.");
             } finally {
+                // Restaura o layout normal
+                element.classList.remove('pdf-mode');
                 element.classList.add('shadow-sm');
                 btn.innerHTML = originalContent;
                 btn.classList.remove('opacity-80', 'pointer-events-none');
