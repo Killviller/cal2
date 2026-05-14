@@ -35,7 +35,7 @@
                     keyframes: {
                         fadeInUp: {
                             '0%': { opacity: '0', transform: 'translateY(15px)' },
-                            '10%': { opacity: '1', transform: 'translateY(0)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
                 }
@@ -44,58 +44,7 @@
     </script>
     
     <!-- Quando separar os arquivos no GitHub, DESCOMENTE a linha abaixo e apague a tag <style> inteira -->
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    
-    <style>
-        /* ========================================================================= */
-        /* === INÍCIO DO ARQUIVO: style.css ======================================== */
-        /* ========================================================================= */
-        
-        body {
-            background-color: #f8fafc;
-        }
-
-        /* Ocultar elementos específicos durante a exportação do PDF */
-        .html2pdf__hide {
-            display: none !important;
-        }
-
-        /* Junção perfeita das bordas nas datas */
-        .calendar-grid-cells {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px 0px; 
-        }
-
-        /* Estilos do Tooltip Interativo */
-        .tooltip-content {
-            visibility: hidden;
-            opacity: 0;
-            transform: translateY(5px) scale(0.95);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        .group\/cell:hover .tooltip-content {
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        
-        /* Efeito de hover suave nos cards dos meses */
-        .month-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .month-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-        }
-
-        /* ========================================================================= */
-        /* === FIM DO ARQUIVO: style.css =========================================== */
-        /* ========================================================================= */
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="text-slate-800 antialiased min-h-screen p-4 md:p-8 flex flex-col items-center">
 
@@ -174,12 +123,12 @@
         
     </div>
 
-    <!-- Quando separar os arquivos, DESCOMENTE a linha abaixo e apague a tag <script> inteira -->
-    <script src="script.js"></script>
+<script src="script.js"></script>
     
 </body>
 </html>
 <!-- ========================================================================= -->
 <!-- === FIM DO ARQUIVO: index.html ========================================== -->
 <!-- ========================================================================= -->
+
 
