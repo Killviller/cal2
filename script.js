@@ -1,10 +1,11 @@
-        // ==========================================
-        // ARQUIVO: script.js
-        // ==========================================
+        // =========================================================================
+        // === INÍCIO DO ARQUIVO: script.js ========================================
+        // (Copie tudo a partir da linha de baixo até o FIM DO ARQUIVO script.js)
+        // =========================================================================
         
         lucide.createIcons();
 
-        // Base de dados de eventos agora COM TÍTULOS E DESCRIÇÕES PARA O TOOLTIP
+        // Base de dados de eventos
         const EVENTS = {
             ranges: [
                 { start: '2026-05-12', end: '2026-05-22', type: 'atividade', title: 'Criação das ofertas', desc: 'Pela coordenação do curso' },
@@ -118,7 +119,6 @@
                 
                 let event = getDayEvent(day.dateStr);
                 
-                // Adicionamos "group/cell" para trigar o hover do tooltip
                 let cellClass = "w-9 h-9 flex items-center justify-center text-sm font-normal relative mx-auto group/cell ";
                 let isAula = EVENTS.aulas.includes(day.dateStr);
                 let tooltipHtml = '';
@@ -154,7 +154,6 @@
                         if (isRowEnd) cellClass += "rounded-r-md ";
                     }
 
-                    // Construção do Tooltip
                     let badgeColor = event.type === 'excepcional' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700';
                     if (event.type === 'matricula') badgeColor = 'bg-slate-800 text-slate-100';
                     
@@ -203,30 +202,29 @@
             const opt = {
                 margin:       10, // Margem nas bordas (em mm)
                 filename:     'Calendario_UAB_2026_2.pdf',
-                image:        { type: 'jpeg', quality: 1 }, // Qualidade máxima de imagem
+                image:        { type: 'jpeg', quality: 1 }, 
                 html2canvas:  { 
-                    scale: 2, // Maior escala = melhor resolução no PDF
+                    scale: 2, 
                     useCORS: true,
                     letterRendering: true,
-                    windowWidth: 1200 // Força uma largura para manter o layout no canvas
+                    windowWidth: 1200 
                 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             try {
-                // Remove as sombras especificamente pro PDF ficar mais "clean" (estilo documento)
                 element.classList.remove('shadow-sm');
-                
                 await html2pdf().set(opt).from(element).save();
-                
             } catch (error) {
                 console.error("Erro ao gerar PDF: ", error);
                 alert("Houve um problema ao exportar o arquivo. Tente novamente.");
             } finally {
-                // Restaura o botão e as sombras
                 element.classList.add('shadow-sm');
                 btn.innerHTML = originalContent;
                 btn.classList.remove('opacity-80', 'pointer-events-none');
                 lucide.createIcons();
             }
         }
+        // =========================================================================
+        // === FIM DO ARQUIVO: script.js ===========================================
+        // =========================================================================
