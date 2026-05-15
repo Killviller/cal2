@@ -34,13 +34,30 @@
             transform: translateY(0) scale(1);
         }
         
-        /* Efeito de hover suave nos cards dos meses */
         .month-card {
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+        
         .month-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Classes aplicadas exclusivamente durante a geração do PDF (Paisagem/Landscape) */
+        .pdf-mode {
+            width: 1250px !important;
+            max-width: 1250px !important;
+            padding: 24px !important;
+            background-color: white !important;
+        }
+        .pdf-mode #calendar-container {
+            gap: 16px !important;
+        }
+        
+        /* Força a quebra de página no PDF para a lista de atividades */
+        .page-break-pdf {
+            page-break-before: always !important;
+            break-before: page !important;
         }
 
         /* ========================================================================= */
