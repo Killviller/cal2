@@ -1,13 +1,8 @@
-        // =========================================================================
-        // === INÍCIO DO ARQUIVO: script.js ========================================
-        // =========================================================================
-        
-        // Proteção: Aguarda todo o HTML carregar antes de executar o script
-        document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
             
             lucide.createIcons();
 
-            // Base de dados de eventos
+            // Datas atualizadas conforme o PDF V5 (Início 22/Ago, Fim 09/Jan/2027)
             const EVENTS = {
                 ranges: [
                     { start: '2026-05-12', end: '2026-05-22', type: 'atividade', title: 'Criação das ofertas', desc: 'Pela coordenação do curso' },
@@ -24,8 +19,8 @@
                     '2026-07-02': { type: 'atividade', title: 'Sincronização Moodle', desc: 'Sincronização das disciplinas' },
                     '2026-08-04': { type: 'resultado', title: 'Resultado Final', desc: 'Todas as matrículas' },
                     '2026-08-05': { type: 'atividade', title: 'Sincronização Moodle', desc: 'Sincronização dos alunos' },
-                    '2026-08-21': { type: 'inicio', title: 'Início do Semestre', desc: 'Semestre 2026.2' },
-                    '2026-12-19': { type: 'fim', title: 'Fim do Semestre', desc: 'Semestre 2026.2' }
+                    '2026-08-22': { type: 'inicio', title: 'Início do Semestre', desc: 'Semestre 2026.2' },
+                    '2027-01-09': { type: 'fim', title: 'Fim do Semestre', desc: 'Semestre 2026.2' }
                 },
                 aulas: [
                     '2026-08-22', '2026-08-28', '2026-08-29',
@@ -36,11 +31,17 @@
                 ]
             };
 
+            // Adicionado Janeiro de 2027 na Array
             const MONTHS = [
-                { name: 'maio', index: 4 }, { name: 'junho', index: 5 },
-                { name: 'julho', index: 6 }, { name: 'agosto', index: 7 },
-                { name: 'setembro', index: 8 }, { name: 'outubro', index: 9 },
-                { name: 'novembro', index: 10 }, { name: 'dezembro', index: 11 }
+                { name: 'maio', index: 4, year: 2026 }, 
+                { name: 'junho', index: 5, year: 2026 },
+                { name: 'julho', index: 6, year: 2026 }, 
+                { name: 'agosto', index: 7, year: 2026 },
+                { name: 'setembro', index: 8, year: 2026 }, 
+                { name: 'outubro', index: 9, year: 2026 },
+                { name: 'novembro', index: 10, year: 2026 }, 
+                { name: 'dezembro', index: 11, year: 2026 },
+                { name: 'janeiro', index: 0, year: 2027 }
             ];
 
             function getFormattedDate(y, m, d) {
@@ -69,7 +70,7 @@
             const container = document.getElementById('calendar-container');
 
             MONTHS.forEach((month, idx) => {
-                const year = 2026;
+                const year = month.year;
                 const firstDay = new Date(year, month.index, 1).getDay();
                 const daysInMonth = new Date(year, month.index + 1, 0).getDate();
                 const daysInPrevMonth = new Date(year, month.index, 0).getDate();
@@ -89,23 +90,23 @@
                      days.push({ val: i, isCurrent: false, dateStr: getFormattedDate(year, month.index + 1, i) });
                 }
 
-                const animDelay = 0.2 + (idx * 0.1);
+                const animDelay = 0.2 + (idx * 0.05);
 
                 let html = `
-                    <div class="month-card bg-white rounded-xl border border-slate-100 p-5 w-[280px] animate-fade-in-up" style="animation-delay: ${animDelay}s; opacity: 0;">
-                        <div class="flex justify-between items-center mb-4">
-                            <button class="w-7 h-7 flex items-center justify-center text-slate-400 hover:bg-slate-100 rounded-md transition-colors html2pdf__hide"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-                            <h2 class="text-[15px] font-semibold text-slate-900 capitalize mx-auto">${month.name} de ${year}</h2>
-                            <button class="w-7 h-7 flex items-center justify-center text-slate-400 hover:bg-slate-100 rounded-md transition-colors html2pdf__hide"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                    <div class="month-card bg-white rounded-xl border border-slate-100 p-4 w-[260px] animate-fade-in-up" style="animation-delay: ${animDelay}s; opacity: 0;">
+                        <div class="flex justify-between items-center mb-3">
+                            <button class="w-6 h-6 flex items-center justify-center text-slate-400 hover:bg-slate-100 rounded-md transition-colors html2pdf__hide"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                            <h2 class="text-sm font-bold text-slate-900 capitalize mx-auto">${month.name} ${year !== 2026 ? year : ''}</h2>
+                            <button class="w-6 h-6 flex items-center justify-center text-slate-400 hover:bg-slate-100 rounded-md transition-colors html2pdf__hide"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
                         </div>
-                        <div class="grid grid-cols-7 text-center mb-2">
-                            <span class="text-[0.75rem] font-bold text-slate-400">D</span>
-                            <span class="text-[0.75rem] font-bold text-slate-400">S</span>
-                            <span class="text-[0.75rem] font-bold text-slate-400">T</span>
-                            <span class="text-[0.75rem] font-bold text-slate-400">Q</span>
-                            <span class="text-[0.75rem] font-bold text-slate-400">Q</span>
-                            <span class="text-[0.75rem] font-bold text-slate-400">S</span>
-                            <span class="text-[0.75rem] font-bold text-slate-400">S</span>
+                        <div class="grid grid-cols-7 text-center mb-1">
+                            <span class="text-[0.7rem] font-bold text-slate-400">D</span>
+                            <span class="text-[0.7rem] font-bold text-slate-400">S</span>
+                            <span class="text-[0.7rem] font-bold text-slate-400">T</span>
+                            <span class="text-[0.7rem] font-bold text-slate-400">Q</span>
+                            <span class="text-[0.7rem] font-bold text-slate-400">Q</span>
+                            <span class="text-[0.7rem] font-bold text-slate-400">S</span>
+                            <span class="text-[0.7rem] font-bold text-slate-400">S</span>
                         </div>
                         <div class="calendar-grid-cells">
                 `;
@@ -117,7 +118,7 @@
                     
                     let event = getDayEvent(day.dateStr);
                     
-                    let cellClass = "w-9 h-9 flex items-center justify-center text-sm font-normal relative mx-auto group/cell ";
+                    let cellClass = "w-8 h-8 flex items-center justify-center text-[13px] font-normal relative mx-auto group/cell ";
                     let isAula = EVENTS.aulas.includes(day.dateStr);
                     let tooltipHtml = '';
 
@@ -183,52 +184,53 @@
                 container.innerHTML += html;
             });
             
-        }); // Fim do DOMContentLoaded
+        }); 
 
         // ==========================================
-        // FUNÇÃO DE GERAÇÃO DE PDF
+        // FUNÇÃO GLOBAL DE GERAÇÃO DE PDF (html2pdf)
         // ==========================================
         
-        // Torna a função global para que o botão HTML (onclick) a consiga encontrar
         window.generatePDF = async function() {
             const btn = document.getElementById('btn-pdf');
             const originalContent = btn.innerHTML;
             const element = document.getElementById('pdf-content');
 
-            // Feedback visual de carregamento
-            btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Gerando PDF...</span>';
+            // Feedback visual e desativa botão
+            btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Gerando PDF (Paisagem)...</span>';
             btn.classList.add('opacity-80', 'pointer-events-none');
             lucide.createIcons();
 
-            // Ativa o modo de layout para PDF (Paisagem, compacto)
+            // Adiciona a classe que força e compacta a largura e margens pro layout de PDF em Paisagem
             element.classList.remove('shadow-sm');
             element.classList.add('pdf-mode');
 
-            // Configurações do html2pdf ajustadas para Paisagem (Landscape) e 1 página
+            // Configurações estritas para garantir PDF Perfeito e que não "corte" na vertical
             const opt = {
-                margin:       [5, 5, 5, 5], // Margem reduzida [top, left, bottom, right]
-                filename:     'Calendario_UAB_2026_2.pdf',
+                margin:       [10, 10, 10, 10], // Margem A4 [top, left, bottom, right]
+                filename:     'Calendario_Academico_EAD_2026_2.pdf',
                 image:        { type: 'jpeg', quality: 1 }, 
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true,
                     letterRendering: true,
-                    windowWidth: 1250, // Fixa a largura do canvas para caber o grid de 4 meses perfeitamente
-                    scrollY: 0 // Evita bugs de captura caso a tela esteja rolada
+                    windowWidth: 1250, // Trava a largura virtual da página para capturar a grade corretamente
+                    scrollY: 0         // Força captura a partir do topo do documento
                 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }, // Formato Paisagem
+                pagebreak:    { mode: ['css', 'legacy'] } // Avisa a biblioteca para respeitar o page-break-before do CSS!
             };
 
             try {
-                // Pequeno delay para garantir que o navegador renderize as mudanças de classe (pdf-mode)
-                await new Promise(resolve => setTimeout(resolve, 150));
+                // Pequeno delay obrigatório para a tela repintar as classes 'pdf-mode'
+                await new Promise(resolve => setTimeout(resolve, 250));
                 
                 await html2pdf().set(opt).from(element).save();
+                
             } catch (error) {
                 console.error("Erro ao gerar PDF: ", error);
                 alert("Houve um problema ao exportar o arquivo. Tente novamente.");
             } finally {
-                // Restaura o layout normal
+                // Remove a classe do modo PDF e restaura o botão original
                 element.classList.remove('pdf-mode');
                 element.classList.add('shadow-sm');
                 btn.innerHTML = originalContent;
@@ -236,7 +238,3 @@
                 lucide.createIcons();
             }
         };
-
-        // =========================================================================
-        // === FIM DO ARQUIVO: script.js ===========================================
-        // =========================================================================
