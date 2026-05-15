@@ -43,7 +43,6 @@
         }
     </script>
     
-    <!-- Quando separar os arquivos no GitHub, DESCOMENTE a linha abaixo e apague a tag <style> inteira -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="text-slate-800 antialiased min-h-screen p-4 md:p-8 flex flex-col items-center">
@@ -52,22 +51,25 @@
     <div class="max-w-5xl w-full flex justify-end mb-6">
         <button id="btn-pdf" onclick="window.generatePDF()" class="bg-slate-900 hover:bg-brand-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 shadow-sm hover:shadow active:scale-95 group z-50">
             <i data-lucide="download" class="w-4 h-4 transition-transform group-hover:-translate-y-0.5"></i> 
-            <span>Baixar PDF Oficial</span>
+            <span>Baixar PDF (Paisagem)</span>
         </button>
     </div>
 
     <!-- CONTEÚDO A SER EXPORTADO PARA PDF -->
     <div id="pdf-content" class="max-w-5xl w-full bg-white p-6 md:p-12 rounded-2xl shadow-sm border border-slate-200">
         
-        <!-- CABEÇALHO DO DOCUMENTO -->
-        <header class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-6 relative">
+        <!-- PÁGINA 1: CABEÇALHO E CALENDÁRIO -->
+        <header class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-6 relative">
             <div class="absolute -left-6 md:-left-12 top-0 w-1.5 h-full bg-brand-600 rounded-r"></div>
             <div>
-
-                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">Calendário UAB 2026.2</h1>
-                <p class="text-slate-500 text-base mt-2 font-medium flex items-center gap-2">
-                    <i data-lucide="calendar-check-2" class="w-5 h-5 text-slate-400"></i>
-                    Cronograma Oficial de Matrículas e Aulas
+                <div class="flex items-center gap-2 mb-2 text-brand-600 font-semibold text-xs tracking-wider uppercase">
+                    <i data-lucide="building-2" class="w-3 h-3"></i>
+                    <span>Padrão Institucional • Comunicado Nº 94/2025</span>
+                </div>
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Calendário Acadêmico EAD 2026.2</h1>
+                <p class="text-slate-500 text-sm mt-2 font-medium flex items-center gap-2">
+                    <i data-lucide="calendar-check-2" class="w-4 h-4 text-slate-400"></i>
+                    Universidade Estadual do Ceará | Universidade Aberta do Brasil
                 </p>
             </div>
             <div class="bg-slate-50 px-4 py-2 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 flex items-center gap-2">
@@ -76,45 +78,90 @@
         </header>
 
         <!-- LEGENDA INTERATIVA -->
-        <div class="mb-10 flex flex-wrap justify-center gap-6 text-sm text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100 animate-fade-in-up" style="animation-delay: 0.1s;">
+        <div class="mb-8 flex flex-wrap justify-center gap-6 text-sm text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100 animate-fade-in-up" style="animation-delay: 0.1s;">
             <div class="flex items-center gap-2 transition-transform hover:scale-105 cursor-default"><div class="w-4 h-4 rounded-sm bg-slate-900 shadow-sm"></div> <span class="font-medium">Matrículas</span></div>
-            <div class="flex items-center gap-2 transition-transform hover:scale-105 cursor-default"><div class="w-4 h-4 rounded-sm bg-slate-400 shadow-sm"></div> <span class="font-medium">Atividades DEG / Coordenação</span></div>
+            <div class="flex items-center gap-2 transition-transform hover:scale-105 cursor-default"><div class="w-4 h-4 rounded-sm bg-slate-400 shadow-sm"></div> <span class="font-medium">Atividades / Resultados</span></div>
             <div class="flex items-center gap-2 transition-transform hover:scale-105 cursor-default"><div class="w-4 h-4 rounded-sm bg-amber-500 shadow-sm"></div> <span class="font-medium">Matrícula Excepcional</span></div>
             <div class="flex items-center gap-2 transition-transform hover:scale-105 cursor-default"><div class="w-4 h-4 rounded-sm border border-slate-300 bg-white text-[10px] font-bold flex items-center justify-center text-slate-500 shadow-sm">A</div> <span class="font-medium">Dias de Aula</span></div>
         </div>
 
         <!-- CONTAINER DOS MESES -->
-        <div id="calendar-container" class="flex flex-wrap justify-center gap-6">
-            <!-- Renderizado dinamicamente -->
+        <div id="calendar-container" class="flex flex-wrap justify-center gap-5">
+            <!-- Renderizado dinamicamente via JS -->
         </div>
 
-        <!-- RODAPÉ E INFORMAÇÕES EXTRAS -->
-        <div class="mt-12 bg-slate-50 rounded-xl border border-slate-200 p-6 animate-fade-in-up" style="animation-delay: 0.8s;">
-            <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 pb-2 border-b border-slate-200 flex items-center gap-2">
-                <i data-lucide="info" class="w-4 h-4 text-brand-600"></i>
-                Observações Importantes
+        <!-- PÁGINA 2 NO PDF: LISTA DETALHADA -->
+        <!-- A classe page-break-pdf garante que no PDF essa div comece numa folha nova -->
+        <div class="page-break-pdf mt-12 bg-white rounded-xl border border-slate-200 p-8 shadow-sm animate-fade-in-up" style="animation-delay: 0.8s;">
+            <h3 class="text-xl font-bold text-slate-900 mb-6 pb-3 border-b border-slate-200 flex items-center gap-2">
+                <i data-lucide="list-checks" class="w-5 h-5 text-brand-600"></i>
+                Cronograma Detalhado de Atividades
             </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <ul class="text-sm text-slate-600 space-y-3 list-none">
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-500 mt-0.5 shrink-0"></i>
-                        <span>O semestre inicia em <strong>21 de agosto</strong> e encerra em <strong>19 de dezembro</strong>.</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-500 mt-0.5 shrink-0"></i>
-                        <span>Feriados e imprensados já foram removidos do calendário de aulas (15/08, 30 e 31/10, 20 e 21/11).</span>
-                    </li>
-                </ul>
-                <ul class="text-sm text-slate-600 space-y-3 list-none">
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="clock" class="w-4 h-4 text-amber-500 mt-0.5 shrink-0"></i>
-                        <span>Envio de ACCs: <strong class="text-amber-600">Data a definir</strong>.</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="clock" class="w-4 h-4 text-amber-500 mt-0.5 shrink-0"></i>
-                        <span>Readmissão após abandono: <strong class="text-amber-600">Data a definir</strong>.</span>
-                    </li>
-                </ul>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-1">
+                <!-- COLUNA 1 -->
+                <div class="flex flex-col gap-3">
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">1.</span> Criação das ofertas (SisAcadG)</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">12 a 22/05/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">2.</span> Validação das ofertas pelo DEG</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">25 a 29/05/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">3.</span> Matrículas dos alunos (1ª fase)</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">18 a 22/06/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">4.</span> Resultado da matrícula (1ª fase)</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">24/06/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">5.</span> Matrículas dos alunos (2ª fase)</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">26 a 29/06/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">6.</span> Resultado da matrícula (2ª fase)</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">01/07/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">7.</span> Sincronização disciplinas (Moodle)</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">02/07/2026</span>
+                    </div>
+                </div>
+
+                <!-- COLUNA 2 -->
+                <div class="flex flex-col gap-3">
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">8.</span> Solicitação das reofertas (DEG)</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">13 a 15/07/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">9.</span> Criação das reofertas pelo DEG</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">16 a 24/07/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">10.</span> 3ª fase de Matrícula (SISACAD)</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-amber-50 px-2 py-0.5 rounded text-amber-800">28 a 31/07/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">11.</span> Divulgação do resultado final</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">04/08/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">12.</span> Sincronização alunos (Moodle)</span>
+                        <span class="text-slate-600 font-medium whitespace-nowrap ml-4 bg-slate-50 px-2 py-0.5 rounded">05/08/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">13.</span> Início do Semestre Letivo</span>
+                        <span class="text-brand-800 font-bold whitespace-nowrap ml-4 bg-brand-50 border border-brand-100 px-2 py-0.5 rounded">22/08/2026</span>
+                    </div>
+                    <div class="flex justify-between items-start py-2 border-b border-slate-50 text-sm">
+                        <span class="text-slate-700 flex gap-2"><span class="font-bold text-slate-900 min-w-[20px]">14.</span> Fim do Semestre Letivo</span>
+                        <span class="text-brand-800 font-bold whitespace-nowrap ml-4 bg-brand-50 border border-brand-100 px-2 py-0.5 rounded">09/01/2027</span>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -122,10 +169,10 @@
 
 <script src="script.js"></script>
     
+
 </body>
 </html>
 <!-- ========================================================================= -->
 <!-- === FIM DO ARQUIVO: index.html ========================================== -->
 <!-- ========================================================================= -->
-
 
